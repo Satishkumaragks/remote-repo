@@ -1,11 +1,12 @@
-FROM ubuntu
-RUN apt update -y
-RUN apt install -y openjdk
-RUN apt install wget -y
-RUN wget -O /etc/yum.repos.d/jenkins.repo \
-    https://pkg.jenkins.io/redhat-stable/jenkins.repo
-RUN rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-RUN apt update -y
-RUN apt install jenkins -y
+FROM ubuntu:18.04
+MAINTAINER satish
+LABEL description="it will up apache server"
+RUN apt update -y && apt install apache2 -y
+ADD demo.tar.gz /var/www/html
+WORKDIR /var/www/html
+VOLUME [ "/var/lib/apache2" ]
+EXPOSE 80
+CMD [ "/usr/sbin/apache2","-D","FOREGROUND" ]
+
 
 
